@@ -69,6 +69,8 @@
     button { appearance: none; border: none; border-radius: 999px; padding: 10px 16px; font-weight: 700; cursor: pointer; background: var(--accent); color: white; }
     button.secondary { background: #e5e7eb; color: #111827; }
     .bot-placeholder { border: 2px dashed #9aa7bd; border-radius: 18px; padding: 28px; text-align: center; background: #f8fafc; color: var(--muted); margin-top: 16px; }
+    .assistant-frame { width: 100%; height: 700px; border: 0; border-radius: 16px; margin-top: 16px; background: #fff; }
+    .assistant-fallback { margin-top: 10px; }
     .footer-note { text-align: center; color: var(--muted); font-size: .92rem; margin-top: 28px; }
     .small { font-size: .92rem; }
     details { border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; background: #fff; margin-top: 12px; }
@@ -176,16 +178,16 @@ Context: This is for... My students are... The teaching goal is... One constrain
         <li>Revise your prompt once.</li>
         <li>If you have time, ask the coach: “What is one more advanced improvement I could make?”</li>
       </ol>
- <iframe
-  src="https://pingpong.hks.harvard.edu/group/39/shared/assistant/3517?share_token=019e3bb9-3598-7673-857d-4425ac2785ed"
-  width="100%"
-  height="700"
-  style="border:none; border-radius:16px;"
-  allow="clipboard-write"
-></iframe>
-      <!-- PINGPONG BOT EMBED INSTRUCTIONS:
-           Replace the entire <div class="bot-placeholder" id="bot-embed-location">...</div>
-           above with the embed code from PingPong, such as an iframe or script tag. -->
+      <iframe
+        class="assistant-frame"
+        title="PingPong Prompt Coach"
+        src="https://pingpong.hks.harvard.edu/group/39/shared/assistant/3517?share_token=019e3bb9-3598-7673-857d-4425ac2785ed"
+        loading="lazy"
+        allow="clipboard-write"
+      ></iframe>
+      <p class="assistant-fallback small muted">
+        If the Prompt Coach does not load, <a href="https://pingpong.hks.harvard.edu/group/39/shared/assistant/3517?share_token=019e3bb9-3598-7673-857d-4425ac2785ed" target="_blank" rel="noopener noreferrer">open it in a new tab</a>.
+      </p>
     </section>
 
     <section class="card">
