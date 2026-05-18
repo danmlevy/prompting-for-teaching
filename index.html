@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompting for AI in Teaching</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #5f6b7a;
+      --accent: #1f5eff;
+      --accent-soft: #e8efff;
+      --border: #d9dee8;
+      --success-soft: #eaf7ef;
+      --warning-soft: #fff5df;
+      --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+      --max-width: 980px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.55;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .page { max-width: var(--max-width); margin: 0 auto; padding: 32px 18px 56px; }
+    .hero {
+      background: linear-gradient(135deg, #ffffff 0%, #eef4ff 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 34px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    .eyebrow { display: inline-block; font-size: .82rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    h1 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; margin: 0 0 14px; letter-spacing: -.03em; }
+    h2 { font-size: 1.55rem; margin: 0 0 12px; letter-spacing: -.02em; }
+    h3 { font-size: 1.12rem; margin: 0 0 8px; }
+    p { margin: 0 0 14px; }
+    .lead { font-size: 1.12rem; color: var(--muted); max-width: 760px; }
+    .time-box { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; background: var(--accent-soft); color: #153e9f; border-radius: 999px; font-size: .92rem; font-weight: 650; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); margin-bottom: 20px; }
+    .section-label { display: inline-block; background: #111827; color: white; font-weight: 700; font-size: .78rem; padding: 5px 10px; border-radius: 999px; margin-bottom: 14px; }
+    .grid { display: grid; gap: 16px; }
+    @media (min-width: 780px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } .grid-2 { grid-template-columns: repeat(2, 1fr); } }
+    .mini-card { border: 1px solid var(--border); border-radius: 16px; padding: 18px; background: #fff; }
+    .mini-card strong { display: block; margin-bottom: 6px; font-size: 1.02rem; }
+    .muted { color: var(--muted); }
+    ul, ol { margin-top: 8px; padding-left: 22px; }
+    li { margin: 8px 0; }
+    .callout { border-radius: 16px; padding: 18px; border: 1px solid var(--border); margin: 16px 0; }
+    .callout.blue { background: var(--accent-soft); border-color: #cbd9ff; }
+    .callout.green { background: var(--success-soft); border-color: #c8ead5; }
+    .callout.yellow { background: var(--warning-soft); border-color: #ffe0a3; }
+    .criteria-table { width: 100%; border-collapse: collapse; margin-top: 12px; overflow: hidden; border-radius: 14px; font-size: .96rem; }
+    .criteria-table th, .criteria-table td { border: 1px solid var(--border); padding: 12px; vertical-align: top; text-align: left; }
+    .criteria-table th { background: #f1f4f9; }
+    .track .tag { display: inline-block; font-size: .78rem; font-weight: 700; color: #153e9f; background: var(--accent-soft); padding: 4px 9px; border-radius: 999px; margin-bottom: 10px; }
+    .prompt-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 16px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: .92rem; white-space: pre-wrap; }
+    label { display: block; margin: 14px 0 8px; }
+    textarea { width: 100%; min-height: 180px; padding: 14px; border: 1px solid var(--border); border-radius: 14px; font: inherit; background: #fff; resize: vertical; }
+    .button-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    button { appearance: none; border: none; border-radius: 999px; padding: 10px 16px; font-weight: 700; cursor: pointer; background: var(--accent); color: white; }
+    button.secondary { background: #e5e7eb; color: #111827; }
+    .bot-placeholder { border: 2px dashed #9aa7bd; border-radius: 18px; padding: 28px; text-align: center; background: #f8fafc; color: var(--muted); margin-top: 16px; }
+    .footer-note { text-align: center; color: var(--muted); font-size: .92rem; margin-top: 28px; }
+    .small { font-size: .92rem; }
+    details { border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; background: #fff; margin-top: 12px; }
+    summary { cursor: pointer; font-weight: 700; }
+    .top-link { text-align: right; font-size: .9rem; margin-top: 12px; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <main class="page" id="top">
+    <section class="hero">
+      <span class="eyebrow">Pre-work module</span>
+      <h1>Prompting for AI in Teaching</h1>
+      <p class="lead">This short module will help you arrive ready to use AI tools more effectively during the program. You will learn a simple framework, write one teaching-related prompt, get feedback from an AI Prompt Coach, and revise it once.</p>
+      <div class="time-box">
+        <span class="pill">⏱ 20 minutes required</span>
+        <span class="pill">🚀 Up to 45 minutes if you want to go deeper</span>
+        <span class="pill">🎯 Goal: improve, not perfect</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <span class="section-label">1. Why This Matters</span>
+      <h2>Good AI use starts with clear communication</h2>
+      <p>AI tools can help with many teaching tasks: improving a syllabus, generating examples, designing activities, supporting students, creating simulations, or building a reusable teaching assistant.</p>
+      <p>But the quality of the output depends heavily on how clearly we communicate what we want.</p>
+      <p>In this module, you will practice writing a prompt that gives AI enough direction to be genuinely useful for your teaching.</p>
+      <div class="callout green"><strong>Key idea:</strong> Good prompting is usually iterative. You do not need to write a perfect prompt on the first try. You write, test, get feedback, revise, and improve.</div>
+    </section>
+
+    <section class="card">
+      <span class="section-label">2. A Simple Framework</span>
+      <h2>TIC: Task, Instructions, Context</h2>
+      <p>For this module, we will use a simple structure called <strong>TIC</strong>. It is not the only way to write prompts, but it is a practical way to make your requests clearer.</p>
+      <div class="grid grid-3">
+        <div class="mini-card"><strong>T = Task</strong><p class="muted">What do you want the AI to do?</p><p class="small">Example: “Give me feedback on this assignment prompt.”</p></div>
+        <div class="mini-card"><strong>I = Instructions</strong><p class="muted">How should the AI do it?</p><p class="small">Example: “Focus on clarity, student motivation, and likely points of confusion.”</p></div>
+        <div class="mini-card"><strong>C = Context</strong><p class="muted">What does the AI need to know?</p><p class="small">Example: “This is for first-year MBA students with mixed prior experience.”</p></div>
+      </div>
+      <div class="callout blue">
+        <p><strong>A useful prompt often answers these questions:</strong></p>
+        <ul>
+          <li>What am I trying to accomplish?</li>
+          <li>Who are the learners?</li>
+          <li>What should the AI pay attention to?</li>
+          <li>What should the AI avoid doing?</li>
+          <li>What kind of output would be most useful to me?</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <span class="section-label">3. How Your Prompt Will Be Coached</span>
+      <h2>What the Prompt Coach will look for</h2>
+      <p>Before you write your prompt, it helps to know what kind of feedback you will receive.</p>
+      <p>The Prompt Coach will not simply judge whether your prompt is “good” or “bad.” It will help you make one practical improvement.</p>
+      <table class="criteria-table">
+        <thead><tr><th>Criterion</th><th>Question to ask yourself</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Task clarity</strong></td><td>Is it clear what I want the AI to produce or help me think through?</td></tr>
+          <tr><td><strong>Specific instructions</strong></td><td>Have I told the AI how to approach the task, not just what the task is?</td></tr>
+          <tr><td><strong>Useful context</strong></td><td>Have I included enough information about the course, students, teaching goal, or constraints?</td></tr>
+          <tr><td><strong>Teaching alignment</strong></td><td>Would the output help me improve learning, not just generate generic content?</td></tr>
+          <tr><td><strong>Guardrails</strong></td><td>Have I told the AI what to avoid, especially if students might use the output?</td></tr>
+          <tr><td><strong>Usability</strong></td><td>Have I specified the format or level of detail that would make the output easy to use?</td></tr>
+        </tbody>
+      </table>
+      <div class="callout yellow"><strong>Remember:</strong> Your first draft does not need to satisfy every criterion. The point is to see how your prompt can improve after feedback.</div>
+    </section>
+
+    <section class="card">
+      <span class="section-label">4. Choose Your Path</span>
+      <h2>Select the task that best fits your current AI experience</h2>
+      <p>Everyone will practice the same underlying skill: communicating clearly with AI. Choose the path that feels most useful to you.</p>
+      <div class="grid grid-3">
+        <div class="mini-card track"><span class="tag">Path A: Beginner</span><h3>Improve something you already teach</h3><p>Write a prompt asking AI to give feedback on a syllabus, assignment, case discussion plan, class activity, or lecture outline.</p><p><strong>Good if:</strong> you are still building confidence with AI tools.</p></div>
+        <div class="mini-card track"><span class="tag">Path B: Intermediate</span><h3>Design an AI teaching assistant</h3><p>Write a prompt for an AI assistant that could help you generate examples, discussion questions, quiz questions, role plays, or student support materials.</p><p><strong>Good if:</strong> you already use AI sometimes and want more teaching-specific value.</p></div>
+        <div class="mini-card track"><span class="tag">Path C: Advanced</span><h3>Draft instructions for a reusable teaching bot</h3><p>Write instructions for an AI tutor, coach, simulator, or feedback assistant that could be reused by you or your students.</p><p><strong>Good if:</strong> you are ready to think about custom GPTs, projects, guardrails, and repeated use.</p></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <span class="section-label">5. Draft Your Prompt</span>
+      <h2>Write a first version</h2>
+      <p>Use the TIC framework to write a teaching-related prompt. Do not worry about making it perfect. Make it clear enough that the Prompt Coach can help you improve it.</p>
+      <div class="callout blue"><p><strong>Optional starter structure:</strong></p><div class="prompt-box">Task: I want you to...
+
+Instructions: Please focus on... Please avoid... Please format the output as...
+
+Context: This is for... My students are... The teaching goal is... One constraint is...</div></div>
+      <label for="draftPrompt"><strong>Your draft prompt</strong></label>
+      <p>Write your first version below. You will copy and paste it into the Prompt Coach.</p>
+      <textarea id="draftPrompt" placeholder="Write your first version here. You will copy and paste it into the Prompt Coach below."></textarea>
+      <div class="button-row"><button onclick="copyDraftPrompt()">Copy my draft prompt</button><button class="secondary" onclick="clearDraftPrompt()">Clear</button></div>
+      <p id="draftCopyStatus" class="small muted" aria-live="polite"></p>
+    </section>
+
+    <section class="card">
+      <span class="section-label">6. Get Feedback from the Prompt Coach</span>
+      <h2>Submit your prompt, then revise once</h2>
+      <p>Paste your draft prompt into the Prompt Coach. The coach will help you identify what is already working and suggest one or two improvements.</p>
+      <ol>
+        <li>Paste your prompt into the Prompt Coach.</li>
+        <li>Read the feedback.</li>
+        <li>Revise your prompt once.</li>
+        <li>If you have time, ask the coach: “What is one more advanced improvement I could make?”</li>
+      </ol>
+      <div class="bot-placeholder" id="bot-embed-location">
+        <strong>Embed Prompt Coach bot here</strong>
+        <p class="small">Replace this box with the PingPong embed code for the AI Teaching Prompt Coach.</p>
+      </div>
+      <!-- PINGPONG BOT EMBED INSTRUCTIONS:
+           Replace the entire <div class="bot-placeholder" id="bot-embed-location">...</div>
+           above with the embed code from PingPong, such as an iframe or script tag. -->
+    </section>
+
+    <section class="card">
+      <span class="section-label">7. Revise and Reflect</span>
+      <h2>Capture what changed</h2>
+      <p>After receiving feedback, revise your prompt. Then answer the short reflection below. You do not need to submit this unless your instructor asks you to.</p>
+      <label for="reflection"><strong>What changed between your first and revised prompt?</strong></label>
+      <textarea id="reflection" placeholder="Example: I added more context about my students, clarified the format I wanted, and added a guardrail so the AI would not generate generic advice."></textarea>
+      <details>
+        <summary>Optional deeper challenge</summary>
+        <p>If you have extra time, try one of these upgrades:</p>
+        <ul>
+          <li>Add examples of the kind of output you want.</li>
+          <li>Add common student misconceptions the AI should watch for.</li>
+          <li>Add guardrails for student-facing use.</li>
+          <li>Ask the AI to adapt its response for novice, intermediate, and advanced learners.</li>
+          <li>Turn your prompt into draft instructions for a reusable custom GPT or AI project.</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="card">
+      <span class="section-label">8. Before the Live Event</span>
+      <h2>Bring one useful prompt with you</h2>
+      <p>Please bring your revised prompt or at least the teaching use case you worked on.</p>
+      <p>We will build on this foundation as we move into AI projects, custom GPTs, and more advanced teaching applications.</p>
+      <div class="callout green"><strong>Success for this pre-work means:</strong><ul><li>You have practiced using AI more deliberately.</li><li>You have revised a prompt based on feedback.</li><li>You have identified at least one teaching task where AI might be useful.</li></ul></div>
+    </section>
+
+    <p class="footer-note">Pre-work module: Prompting for AI in Teaching</p>
+  </main>
+  <script>
+    function copyTextFromTextarea(textareaId, statusId, successMessage) {
+      const text = document.getElementById(textareaId).value;
+      const status = document.getElementById(statusId);
+      if (!text.trim()) { status.textContent = 'Write something first, then copy it.'; return; }
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(function() { status.textContent = successMessage; }, function() { fallbackCopy(textareaId, status, successMessage); });
+      } else { fallbackCopy(textareaId, status, successMessage); }
+    }
+    function fallbackCopy(textareaId, status, successMessage) {
+      const textarea = document.getElementById(textareaId);
+      textarea.focus(); textarea.select();
+      try { document.execCommand('copy'); status.textContent = successMessage; }
+      catch (err) { status.textContent = 'Copy failed. Please select the text and copy it manually.'; }
+    }
+    function copyDraftPrompt() { copyTextFromTextarea('draftPrompt', 'draftCopyStatus', 'Copied. Paste it into the Prompt Coach below.'); }
+    function clearDraftPrompt() { document.getElementById('draftPrompt').value = ''; document.getElementById('draftCopyStatus').textContent = ''; }
+  </script>
+</body>
+</html>
