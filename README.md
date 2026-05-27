@@ -1,6 +1,6 @@
 # Prompting for AI in Teaching
 
-This repository contains the GitHub Pages site for the June 2026 pre-work module, "Prompting for AI in Teaching."
+This repository contains the GitHub Pages site for the reusable faculty learning module, "Prompting for AI in Teaching."
 
 Live site:
 https://danmlevy.github.io/prompting-for-teaching/
@@ -32,6 +32,8 @@ The same PingPong URL also appears immediately below the iframe as a fallback "o
 
 Keep the page practical, supportive, intellectually serious, and not hypey. The required experience should take about 20 minutes, with optional extensions up to about 45 minutes.
 
+The page should stand alone as a general faculty module on prompting for teaching. Put occasion-specific instructions, such as "please complete before our seminar," in the participant email or invitation rather than hard-coding them into the page.
+
 The core teaching frame is TIC:
 
 - Task: What do you want the AI to do?
@@ -45,6 +47,7 @@ When updating either the page or the bot, keep the language consistent around th
 - The Prompt Coach should coach the prompt before answering the underlying teaching task.
 - Feedback should be concise enough that participants actually revise.
 - The experience should prepare participants for later AI projects, custom GPTs, or reusable teaching tools.
+- Section 9 includes a completion survey link: https://forms.gle/nnZ7uhXR2ydXVe8u6
 
 ## Local Preview
 
